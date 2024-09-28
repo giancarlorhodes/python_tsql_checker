@@ -1,0 +1,10 @@
+{
+  "rules": [
+    {
+      "key": 1,
+      "name": "Create Table Naming Convention",
+      "description": "CREATE TABLE should follow the pattern [dbo].[tblkProducts] or [dbo].[tblProducts] where the table name is PascalCase and prefixed with 'tblk' or 'tbl'.",
+      "pattern": "^CREATE\s+TABLE\s+\[dbo\]\.\[(tblk|tbl)[A-Z][a-zA-Z]*\]"
+    }
+  ]
+}
