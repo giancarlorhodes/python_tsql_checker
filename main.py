@@ -18,11 +18,16 @@ def load_rules_from_json(file_path):
         return None
 
 def main():
+
+
     # Ask user for JSON file path
-    file_path = input("Enter the JSON file path and name containing t-sql standard rules: ")
+    rule_path = input("Enter the JSON file path and name containing t-sql standard rules: ")
+
+      # Ask the user for the path to the T-SQL file
+    tsql_file_path = input("Enter the full path of the T-SQL file to process: ")
 
     # Load rules from the JSON file
-    rules = load_rules_from_json(file_path)
+    rules = load_rules_from_json(rule_path)
 
     # If rules were successfully loaded, process them
     if rules is not None:
