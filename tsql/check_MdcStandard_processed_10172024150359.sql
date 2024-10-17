@@ -1182,4 +1182,5 @@
 957  GO
 
 -- Processing Log --
--- 10-15-2024 15:45:20 - File copied and updated with line numbers (comments skipped): C:\github\giancarlorhodes\python_tsql_checker\tsql\check_MdcStandard_processed_10152024154520.sql
+-- 10-17-2024 15:03:59 - File copied and updated with line numbers (comments skipped): C:\github\giancarlorhodes\python_tsql_checker\tsql\check_MdcStandard_processed_10172024150359.sql
+-- 10-17-2024 15:03:59 - Processing complete (without validation).
