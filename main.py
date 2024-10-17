@@ -7,6 +7,9 @@ from datetime import datetime
 # Global list for log entries
 log_entries = []
 
+# Global datetime format string for all timestamps
+DATETIME_FORMAT = '%m-%d-%Y %H:%M:%S'  # Format: MM-DD-YYYY HH:MM:SS
+
 
 def load_rules_from_json(file_path):
     # Load and parse rules from a JSON file.
@@ -23,8 +26,9 @@ def load_rules_from_json(file_path):
         return None
     
 def is_comment(line):
-    """Check if a line is a comment."""
+    # Check if a line is a comment
     stripped_line = line.strip()
+
     # Single-line comment starts with '--'
     if stripped_line.startswith('--'):
         return True
@@ -35,19 +39,19 @@ def is_comment(line):
 
 def log_message(message):
     # Append a timestamped message to the global log entries.
-    timestamped_message = f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - {message}"
+    timestamped_message = f"{datetime.now().strftime(DATETIME_FORMAT)} - {message}"
     log_entries.append(f"-- {timestamped_message}")
 
 def create_processed_copy(tsql_file_path):
-    """Create a copy of the T-SQL file with a timestamp and add line numbers, skipping comment lines."""
+    # Create a copy of the T-SQL file with a timestamp and add line numbers, skipping comment lines.
     # Extract the file name and extension
     file_name, file_ext = os.path.splitext(tsql_file_path)
     
-    # Generate a timestamp in the format DDMMYYYYHHMMSS
-    timestamp = datetime.now().strftime("%d%m%Y%H%M%S")
+    # Generate a timestamp for the filename (without colons)
+    timestamp_for_filename = datetime.now().strftime("%m%d%Y%H%M%S")
     
     # Create the new file name with the timestamp
-    new_file_name = f"{file_name}_processed_{timestamp}{file_ext}"
+    new_file_name = f"{file_name}_processed_{timestamp_for_filename}{file_ext}"
     
     # Copy the original file to the new file
     copyfile(tsql_file_path, new_file_name)
@@ -56,7 +60,6 @@ def create_processed_copy(tsql_file_path):
     with open(new_file_name, 'r') as file:
         lines = file.readlines()
     
-    # Open the file again to write updated content and log
     with open(new_file_name, 'w') as file:
         line_number = 1
         for line in lines:
@@ -68,15 +71,25 @@ def create_processed_copy(tsql_file_path):
                 # Write comment lines without numbering
                 file.write(line)
 
-        # Log processing message
-        log_message(f"File copied and updated with line numbers (comments skipped): {new_file_name}")
+    # Log processing message
+    log_message(f"File copied and updated with line numbers (comments skipped): {new_file_name}")
 
-        # Write the processing log to the end of the file
+    return new_file_name
+
+
+
+def write_processing_log(new_file_name):
+    """Write the processing log to both the console and the end of the file."""
+    # Print each log entry to the console
+    for entry in log_entries:
+        print(entry)
+
+    # Write the processing log to the end of the copied file
+    with open(new_file_name, 'a') as file:  # Open in append mode
         file.write("\n-- Processing Log --\n")
         for entry in log_entries:
             file.write(f"{entry}\n")
 
-    return new_file_name
 
 
 def main():
@@ -88,19 +101,21 @@ def main():
 
     try:
         # Create a timestamped copy of the T-SQL file and add line numbers
-        create_processed_copy(tsql_file_path)
+        new_file_name = create_processed_copy(tsql_file_path)
 
-        # At this point, we are delaying reading the T-SQL statements or validating them
+        # Log message for processing completion
         log_message("Processing complete (without validation).")
+
+        # Write processing log to both console and file
+        write_processing_log(new_file_name)
 
     except FileNotFoundError as e:
         log_message(f"Error: {e}")
+        write_processing_log(new_file_name)  # Write log even if there's an error
+
     except json.JSONDecodeError:
         log_message(f"Error: Invalid JSON file at {rules_file}")
-
-    # Print final log entries to the console
-    for entry in log_entries:
-        print(entry)
+        write_processing_log(new_file_name)  # Write log even if there's an error
 
 if __name__ == "__main__":
     main()

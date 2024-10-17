@@ -5,6 +5,12 @@
       "name": "Create Table Naming Convention",
       "description": "CREATE TABLE should follow the pattern [dbo].[tblkProducts] or [dbo].[tblProducts] where the table name is PascalCase and prefixed with 'tblk' or 'tbl'.",
       "pattern": "^CREATE\\s+TABLE\\s+\\[dbo\\]\\.\\[(tblk|tbl)[A-Z][a-zA-Z]*\\]"
+    },
+    {
+      "key": 2,
+      "name": "Database Name Convention",
+      "description": "MDC databases will follow this pattern for naming.",
+      "pattern": "^([cC][rR][eE][aA][tT][eE]\\s+[dD][aA][tT][aA][bB][aA][sS][eE])\\s+\\[[A-Z][a-z]*(?:[A-Z][a-z]*)*\\]$"
     }
   ]
 }

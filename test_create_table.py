@@ -1,6 +1,6 @@
 
 import unittest
-from create_table_validator import is_valid_create_table_statement
+from validators import is_valid_create_table_statement
 
 class TestCreateTableStatements(unittest.TestCase):
     
@@ -33,4 +33,4 @@ class TestCreateTableStatements(unittest.TestCase):
                 self.assertFalse(is_valid_create_table_statement(statement))  # Assert that the statement is invalid
 
 if __name__ == '__main__':
-    unittest.main()  # Run the unit tests when the script is executed
+    unittest.main(verbosity=2)  # Run the unit tests when the script is executed
