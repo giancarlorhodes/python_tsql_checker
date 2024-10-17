@@ -10,6 +10,11 @@ def is_valid_create_table_statement(statement):
     pattern = r'^CREATE\s+TABLE\s+\[dbo\]\.\[(tblk|tbl)[A-Z][a-zA-Z]*\]'
     return bool(re.match(pattern, statement))
 
+def is_valid_create_table_statement_v2(statement):
+    # Check if the statement is a valid CREATE TABLE statement.
+    pattern = r'^([cC][rR][eE][aA][tT][eE]\s+[tT][aA][bB][lL][eE])\s+\[dbo\]\.\[(tblk|tbl)[A-Z][a-zA-Z]*\]'
+    return bool(re.match(pattern, statement))
+
 
 
 def is_valid_create_database_statement(statement):

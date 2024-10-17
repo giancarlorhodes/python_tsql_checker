@@ -1,6 +1,6 @@
 
 import unittest
-from validators import is_valid_create_table_statement
+from validators import is_valid_create_table_statement, is_valid_create_table_statement_v2
 
 class TestCreateTableStatements(unittest.TestCase):
     
@@ -17,6 +17,21 @@ class TestCreateTableStatements(unittest.TestCase):
         for statement in valid_statements:
             with self.subTest(statement=statement):
                 self.assertTrue(is_valid_create_table_statement(statement))  # Assert that the statement is valid
+
+
+    def test_valid_create_table_statements_v2(self):
+        # List of valid CREATE TABLE statements to test
+        valid_statements = [
+            'CREATE TaBlE [dbo].[tblkProducts]',
+            'CREATE TABLE [dbo].[tblOrders]',
+            'CrEATE TABLE [dbo].[tblkCustomers]',
+            'CREATE taBle [dbo].[tblInvoices]',
+            'create table [dbo].[tblkSuppliers]'
+        ]
+
+        for statement in valid_statements:
+            with self.subTest(statement=statement):
+                self.assertTrue(is_valid_create_table_statement_v2(statement))  # Assert that the statement is valid
 
     def test_failing_create_table_statements(self):
         # List of invalid CREATE TABLE statements to test
