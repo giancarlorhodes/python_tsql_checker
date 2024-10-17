@@ -2,15 +2,27 @@
   "rules": [
     {
       "key": 1,
+      "version": 1,
       "name": "Create Table Naming Convention",
       "description": "CREATE TABLE should follow the pattern [dbo].[tblkProducts] or [dbo].[tblProducts] where the table name is PascalCase and prefixed with 'tblk' or 'tbl'.",
-      "pattern": "^CREATE\\s+TABLE\\s+\\[dbo\\]\\.\\[(tblk|tbl)[A-Z][a-zA-Z]*\\]"
+      "pattern": "^CREATE\\s+TABLE\\s+\\[dbo\\]\\.\\[(tblk|tbl)[A-Z][a-zA-Z]*\\]",
+      "related_to": null
     },
     {
       "key": 2,
+      "version": 1,
       "name": "Database Name Convention",
       "description": "MDC databases will follow this pattern for naming.",
-      "pattern": "^([cC][rR][eE][aA][tT][eE]\\s+[dD][aA][tT][aA][bB][aA][sS][eE])\\s+\\[[A-Z][a-z]*(?:[A-Z][a-z]*)*\\]$"
+      "pattern": "^([cC][rR][eE][aA][tT][eE]\\s+[dD][aA][tT][aA][bB][aA][sS][eE])\\s+\\[[A-Z][a-z]*(?:[A-Z][a-z]*)*\\]$",
+      "related_to": null
+    },
+    {
+      "key": 3,
+      "version": 2,
+      "name": "Create Table Naming Convention v2",
+      "description": "CREATE TABLE should follow the pattern [dbo].[tblkProducts] or [dbo].[tblProducts] where the table name is PascalCase and prefixed with 'tblk' or 'tbl'.",
+      "pattern": "^([cC][rR][eE][aA][tT][eE]\\s+[tT][aA][bB][lL][eE])\\s+\\[dbo\\]\\.\\[(tblk|tbl)[A-Z][a-z]+(?:[A-Z][a-z]+)*\\]$",
+      "related_to": 1
     }
   ]
 }

@@ -1,11 +1,15 @@
-
 import unittest
-from validators import is_valid_create_database_statement
+from validators import Validators
 
 class TestCreateDatabaseStatements(unittest.TestCase):
     
+    @classmethod
+    def setUpClass(cls):
+        # Provide the path to your rules.json file here
+        cls.validators = Validators('rules.json')  # Create an instance of the Validators class with the JSON path
+
     def test_valid_create_database_statements(self):
-        # List of valid CREATE TABLE statements to test
+        # List of valid CREATE DATABASE statements to test
         valid_statements = [
             'CREATE DATABASE [MdcProducts]',
             'CREATE DATABASE [WaterfowlReservation]'
@@ -13,18 +17,18 @@ class TestCreateDatabaseStatements(unittest.TestCase):
 
         for statement in valid_statements:
             with self.subTest(statement=statement):
-                self.assertTrue(is_valid_create_database_statement(statement))  # Assert that the statement is valid
+                self.assertTrue(self.validators.is_valid_create_database_statement(statement))  # Assert that the statement is valid
 
-    def test_failing_database_table_statements(self):
+    def test_failing_database_statements(self):
         # List of invalid CREATE DATABASE statements to test
         failing_statements = [
-            'DATABASE [WaterfowlReservation]',  # missing CREATE
-            'CREATE DATABASE [products]'  # not pascal case db name
+            'DATABASE [WaterfowlReservation]',  # Missing CREATE
+            'CREATE DATABASE [products]'  # Not PascalCase db name
         ]
 
         for statement in failing_statements:
             with self.subTest(statement=statement):
-                self.assertFalse(is_valid_create_database_statement(statement))  # Assert that the statement is invalid
+                self.assertFalse(self.validators.is_valid_create_database_statement(statement))  # Assert that the statement is invalid
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)  # Run the unit tests when the script is executed
