@@ -153,9 +153,30 @@ def write_processing_log(new_file_name):
         for entry in log_entries:
             file.write(f"{entry}\n")
 
+
+
 def process_validation_rules(lines, validators):
-    # Log message for processing completion
-    log_message("Processing complete (without validation).")
+
+   
+    # Processes the given lines and applies validation rules to the ones that contain "CREATE TABLE".
+    # The function logs the results of the validation and appends them to the log.
+    
+    log_message("Starting validation process...")
+
+    for i, line in enumerate(lines, 1):
+        # Convert the line to lowercase for case-insensitive checking
+        lower_line = line.lower()
+
+        # Only process lines that contain "create table"
+        if "create database" in lower_line:
+            # Validate the line using the appropriate validators
+            if validators.is_valid_create_database_statement(line):
+                log_message(f"Line {i}: Passed - Database Name Convention for '{line.strip()}'")
+            else:
+                log_message(f"Line {i}: Failed - Database Name Convention for '{line.strip()}'")
+    
+    log_message("Ending validation process...")
+
 
 def main():
     # Ask the user for the path to the T-SQL file
@@ -176,7 +197,7 @@ def main():
         rules_obj = Rules(rules_file)  # Automatically loads and validates the rules JSON
 
         # Initialize the Validators class with the loaded rules
-        validators = Validators(rules = rules_obj)
+        validators = Validators(in_rules_obj = rules_obj)
 
         # Create a timestamped copy of the T-SQL file and add line numbers, validating lines
         new_file_name, lines = create_processed_copy(tsql_file_path)

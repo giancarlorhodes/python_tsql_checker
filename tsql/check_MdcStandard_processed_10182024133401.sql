@@ -1182,5 +1182,7 @@
 1182  GO
 
 -- Processing Log --
--- 10-17-2024 18:20:04 - File copied and updated with line numbers (including all lines): C:\github\giancarlorhodes\python_tsql_checker\tsql\check_MdcStandard_processed_10172024182004.sql
--- 10-17-2024 18:20:04 - Processing complete (without validation).
+-- 10-18-2024 13:34:01 - File copied and updated with line numbers (including all lines): C:\github\giancarlorhodes\python_tsql_checker\tsql\check_MdcStandard_processed_10182024133401.sql
+-- 10-18-2024 13:34:01 - Starting validation process...
+-- 10-18-2024 13:34:01 - Line 4: Failed - Database Name Convention for 'CREATE DATABASE [MdcStandard]'
+-- 10-18-2024 13:34:01 - Ending validation process...

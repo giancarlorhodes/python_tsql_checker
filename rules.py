@@ -4,6 +4,7 @@ import json
 import os
 
 class Rule:
+
     def __init__(self, key, version, name, description, pattern, related_to):
         self.key = key
         self.version = version
@@ -17,8 +18,9 @@ class Rule:
 
 
 class Rules:
+
     def __init__(self, json_file_path):
-        self.rules = set()  # Use a set to store unique rules
+        self.rule_list = set()  # Use a set to store unique rules
         self.load_rules_from_json(json_file_path)
 
     def load_rules_from_json(self, file_path):
@@ -39,10 +41,10 @@ class Rules:
                         pattern=rule_data['pattern'],
                         related_to=rule_data.get('related_to')
                     )
-                    self.rules.add(rule)  # Add rule object to the set
+                    self.rule_list.add(rule)  # Add rule object to the set
         except json.JSONDecodeError as e:
             print(f"Error: Failed to parse JSON file. {e}")
 
-    def get_rules(self):
+    def get_rule_list(self):
         # Return a set of loaded rules.
-        return self.rules
+        return self.rule_list
