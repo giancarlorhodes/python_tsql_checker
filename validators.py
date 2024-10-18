@@ -5,8 +5,17 @@ import re
 from rules import Rules
 
 class Validators:
-    def __init__(self, rules_json_path):
-        self.rules = Rules(rules_json_path).get_rules()
+
+   
+    def __init__(self, rules_json_path=None, rules=None):
+        # If a rules object is passed, use it directly
+        if rules:
+            self.rules = rules
+        # If no rules object, load rules from the JSON path
+        elif rules_json_path:
+            self.rules = Rules(rules_json_path).get_rules()
+        else:
+            raise ValueError("You must provide either 'rules_json_path' or 'rules' to initialize Validators.")
 
     def is_valid_create_table_statement(self, statement):
         # Get the pattern for the Create Table rule (version 1 or 2)
