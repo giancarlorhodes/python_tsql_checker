@@ -158,7 +158,7 @@ def write_processing_log(new_file_name):
 def process_validation_rules(lines, validators):
 
    
-    # Processes the given lines and applies validation rules to the ones that contain "CREATE TABLE".
+    # Processes the given lines and applies validation rules.
     # The function logs the results of the validation and appends them to the log.
     
     log_message("Starting validation process...")
@@ -167,13 +167,21 @@ def process_validation_rules(lines, validators):
         # Convert the line to lowercase for case-insensitive checking
         lower_line = line.lower()
 
-        # Only process lines that contain "create table"
+        # Only process lines that contain "create database"
         if "create database" in lower_line:
             # Validate the line using the appropriate validators
             if validators.is_valid_create_database_statement(line):
                 log_message(f"Line {i}: Passed - Database Name Convention for '{line.strip()}'")
             else:
                 log_message(f"Line {i}: Failed - Database Name Convention for '{line.strip()}'")
+
+        # Only process lines that contain "create table"
+        if "create table" in lower_line:
+            # Validate the line using the appropriate validators
+            if validators.is_valid_create_table_statement_v2(line):
+                log_message(f"Line {i}: Passed - Table Name Convention for '{line.strip()}'")
+            else:
+                log_message(f"Line {i}: Failed - Table Name Convention for '{line.strip()}'")         
     
     log_message("Ending validation process...")
 

@@ -21,7 +21,7 @@
       "version": 2,
       "name": "Create Table Naming Convention v2",
       "description": "CREATE TABLE should follow the pattern [dbo].[tblkProducts] or [dbo].[tblProducts] where the table name is PascalCase and prefixed with 'tblk' or 'tbl'.",
-      "pattern": "^([cC][rR][eE][aA][tT][eE]\\s+[tT][aA][bB][lL][eE])\\s+\\[dbo\\]\\.\\[(tblk|tbl)[A-Z][a-z]+(?:[A-Z][a-z]+)*\\]$",
+      "pattern": "^([cC][rR][eE][aA][tT][eE]\\s+[tT][aA][bB][lL][eE])\\s+\\[dbo\\]\\.\\[(tblk|tbl)[A-Za-z]+(?:[A-Za-z]+)*\\].*$",
       "related_to": 1
     }
   ]
