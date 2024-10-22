@@ -51,3 +51,15 @@ class Validators:
             raise ValueError("Database Name Convention rule not found.")
         
         return bool(re.match(pattern, statement))
+    
+
+    def is_valid_column_name(self, statement):
+         # Get the pattern for the Column Name Convention rule
+        for rule in self.rule_list:
+            if rule.key == 4 and rule.version == 1:
+                pattern = rule.pattern
+                break
+        else:
+            raise ValueError("Column Name Convention rule not found.")
+        
+        return bool(re.match(pattern, statement))

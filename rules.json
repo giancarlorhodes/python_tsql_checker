@@ -29,8 +29,8 @@
       "version": 1,
       "name": "Column Naming Convention",
       "description": "Passing examples are [FirstName] [nvarchar](10) NOT NULL, [Title] [nvarchar](30) NULL",
-      "pattern": "\\[([A-Z][a-z]+(?:[A-Z][a-z]+)*)\\]\\s+\\[[A-Za-z]+\\].*",
-      "related_to": 1
+      "pattern": "\\s*\\[([A-Z][a-z]+(?:[A-Z][a-z]+)*)\\]\\s+\\[[A-Za-z]+\\].*",
+      "related_to": null
     }
   ]
 }
