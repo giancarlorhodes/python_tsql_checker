@@ -81,22 +81,24 @@ def log_message(message):
     timestamped_message = f"{datetime.now().strftime(DATETIME_FORMAT)} - {message}"
     log_entries.append(f"-- {timestamped_message}")
 
-def processing_database_name(lines, validators):
-    results = []  # To store validation results for database names
-    for line_number, line in enumerate(lines, start=1):
-        stripped_line = line.strip()
-        if "create database" in stripped_line.lower():  # Check if the line contains "create database"
-            # Check if the line starts with "CREATE DATABASE" and extract the database name
-            if stripped_line.lower().startswith("create database"):
-                parts = stripped_line.split()
-                if len(parts) > 2 and parts[2].startswith('[') and parts[2].endswith(']'):
-                    db_name = parts[2][1:-1]  # Remove the brackets
-                    timestamp = datetime.now().strftime(DATETIME_FORMAT)  # Get current timestamp
-                    if validators.is_valid_create_database_statement(stripped_line):
-                        results.append(f"-- {timestamp} - Line {line_number}: Passed - Database Name Convention for '{db_name}'")
-                    else:
-                        results.append(f"-- {timestamp} - Line {line_number}: Failed - Database Name Convention for '{db_name}'")
-    return results
+
+# # OLD - TODO REMOVE
+# def processing_database_name(lines, validators):
+#     results = []  # To store validation results for database names
+#     for line_number, line in enumerate(lines, start=1):
+#         stripped_line = line.strip()
+#         if "create database" in stripped_line.lower():  # Check if the line contains "create database"
+#             # Check if the line starts with "CREATE DATABASE" and extract the database name
+#             if stripped_line.lower().startswith("create database"):
+#                 parts = stripped_line.split()
+#                 if len(parts) > 2 and parts[2].startswith('[') and parts[2].endswith(']'):
+#                     db_name = parts[2][1:-1]  # Remove the brackets
+#                     timestamp = datetime.now().strftime(DATETIME_FORMAT)  # Get current timestamp
+#                     if validators.is_valid_create_database_statement(stripped_line):
+#                         results.append(f"-- {timestamp} - Line {line_number}: Passed - Database Name Convention for '{db_name}'")
+#                     else:
+#                         results.append(f"-- {timestamp} - Line {line_number}: Failed - Database Name Convention for '{db_name}'")
+#     return results
 
 
 def create_processed_copy(tsql_file_path):
