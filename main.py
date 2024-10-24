@@ -1,4 +1,3 @@
-
 import json
 import sys
 import os
@@ -10,58 +9,8 @@ from validators import Validators
 # Global list for log entries
 log_entries = []
 
-
 # Global datetime format string for all timestamps
 DATETIME_FORMAT = '%m-%d-%Y %H:%M:%S'  # Format: MM-DD-YYYY HH:MM:SS
-
-# # OLD REMOVE IT
-# def load_rules_from_json(file_path):
-#     # Load and parse rules from a JSON file.
-#     if not os.path.exists(file_path):
-#         print(f"Error: File '{file_path}' does not exist.")
-#         return None
-    
-#     try:
-#         with open(file_path, 'r') as file:
-#             rules = json.load(file)
-#             return rules
-#     except json.JSONDecodeError as e:
-#         print(f"Error: Failed to parse JSON file. {e}")
-#         return None
-    
-# TODO - this is defined in Rules class and  should be used 
-# REMOVE - duplicate code
-def load_rules_from_json(file_path):
-
-    # """
-    # Loads and parses rules from a JSON file.
-    
-    # Args:
-    #     file_path (str): The path to the JSON file containing rules.
-    
-    # Returns:
-    #     dict: A dictionary containing rules if the file is successfully loaded and parsed.
-    #           Returns None if the file doesn't exist or there are parsing errors.
-    # """
-
-
-    # Check if the file exists before attempting to open it
-    if not os.path.exists(file_path):
-        # Print an error message if the file does not exist
-        print(f"Error: File '{file_path}' does not exist.")
-        return None
-    
-    try:
-        # Open the JSON file in read mode
-        with open(file_path, 'r') as file:
-            # Load the contents of the file into a Python dictionary
-            rules = json.load(file)
-            return rules  # Return the dictionary with the rules
-            
-    except json.JSONDecodeError as e:
-        # Catch and print a detailed error if the JSON file has parsing issues
-        print(f"Error: Failed to parse JSON file. {e}")
-        return None
 
     
 def is_comment(line):
@@ -81,24 +30,6 @@ def log_message(message):
     timestamped_message = f"{datetime.now().strftime(DATETIME_FORMAT)} - {message}"
     log_entries.append(f"-- {timestamped_message}")
 
-
-# # OLD - TODO REMOVE
-# def processing_database_name(lines, validators):
-#     results = []  # To store validation results for database names
-#     for line_number, line in enumerate(lines, start=1):
-#         stripped_line = line.strip()
-#         if "create database" in stripped_line.lower():  # Check if the line contains "create database"
-#             # Check if the line starts with "CREATE DATABASE" and extract the database name
-#             if stripped_line.lower().startswith("create database"):
-#                 parts = stripped_line.split()
-#                 if len(parts) > 2 and parts[2].startswith('[') and parts[2].endswith(']'):
-#                     db_name = parts[2][1:-1]  # Remove the brackets
-#                     timestamp = datetime.now().strftime(DATETIME_FORMAT)  # Get current timestamp
-#                     if validators.is_valid_create_database_statement(stripped_line):
-#                         results.append(f"-- {timestamp} - Line {line_number}: Passed - Database Name Convention for '{db_name}'")
-#                     else:
-#                         results.append(f"-- {timestamp} - Line {line_number}: Failed - Database Name Convention for '{db_name}'")
-#     return results
 
 
 def create_processed_copy(tsql_file_path):
@@ -156,38 +87,6 @@ def write_processing_log(new_file_name):
             file.write(f"{entry}\n")
 
 
-# # OLD
-# def process_validation_rules(lines, validators):
-
-   
-#     # Processes the given lines and applies validation rules.
-#     # The function logs the results of the validation and appends them to the log.
-    
-#     log_message("Starting validation process...")
-
-#     for i, line in enumerate(lines, 1):
-#         # Convert the line to lowercase for case-insensitive checking
-#         lower_line = line.lower()
-
-#         # Only process lines that contain "create database"
-#         if "create database" in lower_line:
-#             # Validate the line using the appropriate validators
-#             if validators.is_valid_create_database_statement(line):
-#                 log_message(f"Line {i}: Passed - Database Name Convention for '{line.strip()}'")
-#             else:
-#                 log_message(f"Line {i}: Failed - Database Name Convention for '{line.strip()}'")
-
-#         # Only process lines that contain "create table"
-#         if "create table" in lower_line:
-#             # Validate the line using the appropriate validators
-#             if validators.is_valid_create_table_statement_v2(line):
-#                 log_message(f"Line {i}: Passed - Table Name Convention for '{line.strip()}'")
-#             else:
-#                 log_message(f"Line {i}: Failed - Table Name Convention for '{line.strip()}'")         
-    
-#     log_message("Ending validation process...")
-
-
 def process_validation_rules(lines, validators):
     # Log message for the start of the validation process
     log_message("Starting validation process...")
@@ -240,18 +139,13 @@ def process_validation_rules(lines, validators):
 
 
 def main():
+
     # Ask the user for the path to the T-SQL file
     tsql_file_path = input("Enter the full path of the T-SQL file to process: ")
 
     # Ask the user for the rules file (default to 'rules.json' if no input)
     rules_file = input("Enter the full path of the rules JSON file (default: rules.json): ") or 'rules.json'
-
-    # Load rules using the Rules class
-    # rules = Rules(rules_file)  # Pass the file path to Rules
-
-    # TODO - pass rules not the file
-    # validators = Validators(rules_file)  # Pass the file path to Validators
-
+  
     try:
 
          # Load rules using the Rules class

@@ -1,3 +1,7 @@
+# STEPS
+1. Generate Scripts: Right click on Database --> TASKS --> GENERATE SCRIPTS --> SCRIPT ENTIRE DATABASE AND ALL DATABASE OBJECTS --> generate to new query to save file 
+
+2. RUN main.py script
 C:\github\giancarlorhodes\python_tsql_checker\tsql\check_MdcStandard.sql
 C:\github\giancarlorhodes\python_tsql_checker\rules.json
 
@@ -10,13 +14,13 @@ your_project/
 └── README.md                   # Project documentation
 
 
-
+# IMPLEMENTATION  CODE STEPS
 # HIGH LEVEL STEPS
 1. load the rules from a file
 2. get the name and path of the t-sql file to process on
 3. create a copy of the t-sql file call orginalname_datetimestamp_processed.sql
 4. number the each line in the copy file line by line
 5. add a log section t-sql comment at the end of the copy that describes each step
- first line in the log will say "added line numbers"
+
  
 

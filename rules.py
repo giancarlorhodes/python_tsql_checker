@@ -42,6 +42,7 @@ class Rules:
                         related_to=rule_data.get('related_to')
                     )
                     self.rule_list.add(rule)  # Add rule object to the set
+                    
         except json.JSONDecodeError as e:
             print(f"Error: Failed to parse JSON file. {e}")
 
