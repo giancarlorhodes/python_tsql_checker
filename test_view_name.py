@@ -23,7 +23,7 @@ class TestCreateTableStatements(unittest.TestCase):
                 self.assertTrue(self.validators.is_valid_view_name_statement(statement))  # Assert that the statement is valid
 
    
-    def test_failing_valid_view_statement(self):
+    def test_failing_view_statement(self):
         # List of invalid view
         failing_statements = [
             'VIEW [dbo].[vw Customer And Suppliers By City]',

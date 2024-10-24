@@ -47,29 +47,13 @@
       "description": "VIEW [dbo].[vwOrderSubtotals] or CREATE VIEW [dbo].[vwOrderSubtotals]",
       "pattern": "(?:[cC][rR][eE][aA][tT][eE](?:\\s+[oO][rR]\\s+[aA][lL][tT][eE][rR])?|[aA][lL][tT][eE][rR])?\\s*[vV][iI][eE][wW]\\s+\\[dbo\\]\\.\\[vw[A-Z][a-zA-Z]+\\]",
       "related_to": 5
-    },
+    },    
     {
       "key": 7,
       "version": 1,
-      "name": "Check Trigger Naming Convention",
-      "description": "",
-      "pattern": "",
-      "related_to": null
-    },
-    {
-      "key": 8,
-      "version": 1,
-      "name": "Check Function Naming Convention",
-      "description": "",
-      "pattern": "",
-      "related_to": null
-    },
-    {
-      "key": 9,
-      "version": 1,
-      "name": "Check Stored Procedure Naming Convention",
-      "description": "",
-      "pattern": "",
+      "name": "Check Procedure Naming Convention",
+      "description": "CREATE procEdure [dbo].[uspCustOrderHist] matches",
+      "pattern": "(?:[cC][rR][eE][aA][tT][eE](?:\\s+[oO][rR]\\s+[aA][lL][tT][eE][rR])?|[aA][lL][tT][eE][rR])?\\s*[pP][rR][oO][cC][eE][dD][uU][rR][eE]\\s+\\[dbo\\]\\.\\[usp[A-Z][a-zA-Z]+\\]",
       "related_to": null
     }
     

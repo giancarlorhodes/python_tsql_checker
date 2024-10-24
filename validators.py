@@ -16,7 +16,7 @@ class Validators:
 
 
     def is_valid_create_table_statement(self, statement):
-        # Get the pattern for the Create Table rule version 1
+        # Get the pattern for the create table rule version 1
         
         for rule in self.rule_list:
             if rule.key  == 1 and rule.version == 1:
@@ -28,7 +28,7 @@ class Validators:
         return bool(re.match(pattern, statement))
 
     def is_valid_create_table_statement_v2(self, statement):
-        # Get the pattern for the Create Table rule version 2
+        # Get the pattern for the create table rule version 2
         for rule in self.rule_list:
             if rule.key == 3 and rule.version == 2:
                 pattern = rule.pattern
@@ -39,7 +39,7 @@ class Validators:
         return bool(re.match(pattern, statement))
 
     def is_valid_create_database_statement(self, statement):
-        # Get the pattern for the Database Name Convention rule
+        # Get the pattern for the database name convention rule
         for rule in self.rule_list:
             if rule.key == 2 and rule.version == 1:
                 pattern = rule.pattern
@@ -51,7 +51,7 @@ class Validators:
     
 
     def is_valid_column_name_statement(self, statement):
-         # Get the pattern for the Column name convention rule
+         # Get the pattern for the column name convention rule
         for rule in self.rule_list:
             if rule.key == 4 and rule.version == 1:
                 pattern = rule.pattern
@@ -63,13 +63,25 @@ class Validators:
     
 
     def is_valid_view_name_statement(self, statement):
-        # Get the pattern for the view Name Convention rule
+        # Get the pattern for the view name convention rule
         for rule in self.rule_list:
             if rule.key == 6 and rule.version == 2:
                 pattern = rule.pattern
                 break
         else:
             raise ValueError("View Name Convention rule not found.")
+        
+        return bool(re.match(pattern, statement))
+    
+
+    def is_valid_procedure_name_statement(self, statement):
+        # Get the pattern for the procedure name convention rule
+        for rule in self.rule_list:
+            if rule.key == 7 and rule.version == 1:
+                pattern = rule.pattern
+                break
+        else:
+            raise ValueError("Procedure Name Convention rule not found.")
         
         return bool(re.match(pattern, statement))
     

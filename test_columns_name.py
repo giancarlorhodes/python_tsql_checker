@@ -20,7 +20,7 @@ class TestCreateTableStatements(unittest.TestCase):
                 self.assertTrue(self.validators.is_valid_column_name_statement(statement))  # Assert that the statement is valid
 
    
-    def test_failing_valid_column_statement(self):
+    def test_failing_column_statement(self):
         # List of invalid columns
         failing_statements = [
             '[ProductID] [int] IDENTITY(1,1) NOT NULL',
