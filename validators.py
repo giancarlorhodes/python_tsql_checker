@@ -1,12 +1,9 @@
 # validators.py
-
 import re
 from rules import Rules
 
-
 class Validators:
 
-  
     def __init__(self, rules_json_path=None, in_rules_obj=None):
         # If a rules object is passed, use it directly
         if in_rules_obj:
@@ -54,7 +51,7 @@ class Validators:
     
 
     def is_valid_column_name_statement(self, statement):
-         # Get the pattern for the Column Name Convention rule
+         # Get the pattern for the Column name convention rule
         for rule in self.rule_list:
             if rule.key == 4 and rule.version == 1:
                 pattern = rule.pattern
@@ -63,3 +60,18 @@ class Validators:
             raise ValueError("Column Name Convention rule not found.")
         
         return bool(re.match(pattern, statement))
+    
+
+    def is_valid_view_name_statement(self, statement):
+        # Get the pattern for the view Name Convention rule
+        for rule in self.rule_list:
+            if rule.key == 6 and rule.version == 2:
+                pattern = rule.pattern
+                break
+        else:
+            raise ValueError("View Name Convention rule not found.")
+        
+        return bool(re.match(pattern, statement))
+    
+
+

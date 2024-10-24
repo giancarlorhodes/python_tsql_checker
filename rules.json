@@ -37,11 +37,19 @@
       "version": 1,
       "name": "Check View Naming Convention",
       "description": "VIEW [dbo].[vwOrderSubtotals] or CREATE VIEW [dbo].[vwOrderSubtotals]",
-      "pattern": "(?i)^VIEW\\s+\\[dbo\\]\\.\\[vw[a-z]+(?:[A-Z][a-z]+)*\\]$",
+      "pattern": "(?:CREATE\\s+OR\\s+ALTER|CREATE|ALTER)?\\s*VIEW\\s+\\[dbo\\]\\.\\[vw[A-Z][a-zA-Z]+\\]",
       "related_to": null
     },
     {
       "key": 6,
+      "version": 2,
+      "name": "Check View Naming Convention v2",
+      "description": "VIEW [dbo].[vwOrderSubtotals] or CREATE VIEW [dbo].[vwOrderSubtotals]",
+      "pattern": "(?:[cC][rR][eE][aA][tT][eE](?:\\s+[oO][rR]\\s+[aA][lL][tT][eE][rR])?|[aA][lL][tT][eE][rR])?\\s*[vV][iI][eE][wW]\\s+\\[dbo\\]\\.\\[vw[A-Z][a-zA-Z]+\\]",
+      "related_to": 5
+    },
+    {
+      "key": 7,
       "version": 1,
       "name": "Check Trigger Naming Convention",
       "description": "",
@@ -49,7 +57,7 @@
       "related_to": null
     },
     {
-      "key": 7,
+      "key": 8,
       "version": 1,
       "name": "Check Function Naming Convention",
       "description": "",
@@ -57,12 +65,13 @@
       "related_to": null
     },
     {
-      "key": 8,
+      "key": 9,
       "version": 1,
       "name": "Check Stored Procedure Naming Convention",
       "description": "",
       "pattern": "",
       "related_to": null
     }
+    
   ]
 }
