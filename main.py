@@ -135,66 +135,140 @@ def write_processing_log(new_file_name):
 #     # Log message for the end of the validation process
 #     log_message("Ending validation process...")
 
+# # OLD
+# def process_validation_rules(lines, validators):
+
+#     # Log message for the start of the validation process
+#     log_message("Starting validation process...")
+
+#     in_create_table_block = False  # Track if we're inside a CREATE TABLE block
+
+#     for i, line in enumerate(lines, 1):
+#         # Trim leading/trailing whitespace
+#         stripped_line = line.strip()
+
+#         # Skip lines that are comments (start with '/*' or '--')
+#         if stripped_line.startswith('/*') or stripped_line.startswith('--'):
+#             continue
+
+#         # Convert the line to lowercase for case-insensitive checking
+#         lower_line = line.lower()
+
+#         # Only process lines that contain "create table"
+#         if "create table" in lower_line:
+#             in_create_table_block = True
+
+#             # Validate the table name regardless of capitalization
+#             if validators.is_valid_create_table_statement_v2(line):
+#                 log_message(f"Line {i}: Passed - Table Name Convention for '{line.strip()}'")
+#             else:
+#                 log_message(f"Line {i}: Failed - Table Name Convention for '{line.strip()}'")
+
+#         # Process the columns if we're inside a CREATE TABLE block
+#         elif in_create_table_block:
+#             # If the line starts with '[', it's a column definition
+#             if stripped_line.startswith('['):
+#                 # Validate the column name using the column name validation function
+#                 if validators.is_valid_column_name_statement(line):
+#                     log_message(f"Line {i}: Passed - Column Name Convention for '{line.strip()}'")
+#                 else:
+#                     log_message(f"Line {i}: Failed - Column Name Convention for '{line.strip()}'")
+#             else:
+#                 # End of CREATE TABLE block once we encounter a line that doesn't start with '['
+#                 in_create_table_block = False
+#                 log_message(f"Line {i}: End of table definition block.")
+
+#         # Only process lines that contain "create database"
+#         if "create database" in lower_line:
+#             # Validate the database name using the appropriate validator
+#             if validators.is_valid_create_database_statement(line):
+#                 log_message(f"Line {i}: Passed - Database Name Convention for '{line.strip()}'")
+#             else:
+#                 log_message(f"Line {i}: Failed - Database Name Convention for '{line.strip()}'")
+
+#         # Process lines that contain "view" or "create view"
+#         if "view" in lower_line:
+#             # Check if it's a "CREATE VIEW" or simply "VIEW" definition
+#             if validators.is_valid_view_name_statement(line):
+#                 log_message(f"Line {i}: Passed - View Name Convention for '{line.strip()}'")
+#             else:
+#                 log_message(f"Line {i}: Failed - View Name Convention for '{line.strip()}'")
+
+#     # Log message for the end of the validation process
+#     log_message("Ending validation process...")
+
+
 def process_validation_rules(lines, validators):
-    
-    # Log message for the start of the validation process
     log_message("Starting validation process...")
 
-    in_create_table_block = False  # Track if we're inside a CREATE TABLE block
+    in_create_table_block = False
 
     for i, line in enumerate(lines, 1):
-        # Trim leading/trailing whitespace
         stripped_line = line.strip()
 
-        # Skip lines that are comments (start with '/*' or '--')
-        if stripped_line.startswith('/*') or stripped_line.startswith('--'):
+        # Skip comment lines
+        if is_comment_line(stripped_line):
             continue
 
-        # Convert the line to lowercase for case-insensitive checking
-        lower_line = line.lower()
+        lower_line = stripped_line.lower()
 
-        # Only process lines that contain "create table"
+        # Process based on line content
         if "create table" in lower_line:
-            in_create_table_block = True
-
-            # Validate the table name regardless of capitalization
-            if validators.is_valid_create_table_statement_v2(line):
-                log_message(f"Line {i}: Passed - Table Name Convention for '{line.strip()}'")
-            else:
-                log_message(f"Line {i}: Failed - Table Name Convention for '{line.strip()}'")
-
-        # Process the columns if we're inside a CREATE TABLE block
+            in_create_table_block = process_create_table(i, line, validators)
         elif in_create_table_block:
-            # If the line starts with '[', it's a column definition
-            if stripped_line.startswith('['):
-                # Validate the column name using the column name validation function
-                if validators.is_valid_column_name_statement(line):
-                    log_message(f"Line {i}: Passed - Column Name Convention for '{line.strip()}'")
-                else:
-                    log_message(f"Line {i}: Failed - Column Name Convention for '{line.strip()}'")
-            else:
-                # End of CREATE TABLE block once we encounter a line that doesn't start with '['
-                in_create_table_block = False
-                log_message(f"Line {i}: End of table definition block.")
+            in_create_table_block = process_table_columns(i, line, validators, in_create_table_block)
+        elif "create database" in lower_line:
+            process_create_database(i, line, validators)
+        elif "view" in lower_line:
+            process_view(i, line, validators)
 
-        # Only process lines that contain "create database"
-        if "create database" in lower_line:
-            # Validate the database name using the appropriate validator
-            if validators.is_valid_create_database_statement(line):
-                log_message(f"Line {i}: Passed - Database Name Convention for '{line.strip()}'")
-            else:
-                log_message(f"Line {i}: Failed - Database Name Convention for '{line.strip()}'")
-
-        # Process lines that contain "view" or "create view"
-        if "view" in lower_line:
-            # Check if it's a "CREATE VIEW" or simply "VIEW" definition
-            if validators.is_valid_view_name_statement(line):
-                log_message(f"Line {i}: Passed - View Name Convention for '{line.strip()}'")
-            else:
-                log_message(f"Line {i}: Failed - View Name Convention for '{line.strip()}'")
-
-    # Log message for the end of the validation process
     log_message("Ending validation process...")
+
+
+def is_comment_line(line):
+    # Returns True if the line is a comment.
+    return line.startswith('/*') or line.startswith('--')
+
+
+def process_create_table(line_number, line, validators):
+    # Processes a CREATE TABLE statement and validates it.
+    if validators.is_valid_create_table_statement_v2(line):
+        log_message(f"Line {line_number}: Passed - Table Name Convention for '{line.strip()}'")
+    else:
+        log_message(f"Line {line_number}: Failed - Table Name Convention for '{line.strip()}'")
+    return True
+
+
+def process_table_columns(line_number, line, validators, in_create_table_block):
+    # Processes the columns inside a CREATE TABLE block.
+    stripped_line = line.strip()
+    
+    if stripped_line.startswith('['):
+        if validators.is_valid_column_name_statement(line):
+            log_message(f"Line {line_number}: Passed - Column Name Convention for '{line.strip()}'")
+        else:
+            log_message(f"Line {line_number}: Failed - Column Name Convention for '{line.strip()}'")
+    else:
+        log_message(f"Line {line_number}: End of table definition block.")
+        in_create_table_block = False
+    
+    return in_create_table_block
+
+
+def process_create_database(line_number, line, validators):
+    # Processes a CREATE DATABASE statement and validates it.
+    if validators.is_valid_create_database_statement(line):
+        log_message(f"Line {line_number}: Passed - Database Name Convention for '{line.strip()}'")
+    else:
+        log_message(f"Line {line_number}: Failed - Database Name Convention for '{line.strip()}'")
+
+
+def process_view(line_number, line, validators):
+    #Processes a CREATE VIEW or VIEW statement and validates it.
+    if validators.is_valid_view_name_statement(line):
+        log_message(f"Line {line_number}: Passed - View Name Convention for '{line.strip()}'")
+    else:
+        log_message(f"Line {line_number}: Failed - View Name Convention for '{line.strip()}'")
 
 
 
