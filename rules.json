@@ -37,13 +37,29 @@
       "version": 1,
       "name": "Check View Naming Convention",
       "description": "VIEW [dbo].[vwOrderSubtotals] or CREATE VIEW [dbo].[vwOrderSubtotals]",
-      "pattern": "",
+      "pattern": "(?i)^VIEW\\s+\\[dbo\\]\\.\\[vw[a-z]+(?:[A-Z][a-z]+)*\\]$",
       "related_to": null
     },
     {
       "key": 6,
       "version": 1,
       "name": "Check Trigger Naming Convention",
+      "description": "",
+      "pattern": "",
+      "related_to": null
+    },
+    {
+      "key": 7,
+      "version": 1,
+      "name": "Check Function Naming Convention",
+      "description": "",
+      "pattern": "",
+      "related_to": null
+    },
+    {
+      "key": 8,
+      "version": 1,
+      "name": "Check Stored Procedure Naming Convention",
       "description": "",
       "pattern": "",
       "related_to": null
