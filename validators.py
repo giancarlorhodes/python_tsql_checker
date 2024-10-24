@@ -53,7 +53,7 @@ class Validators:
         return bool(re.match(pattern, statement))
     
 
-    def is_valid_column_name(self, statement):
+    def is_valid_column_name_statement(self, statement):
          # Get the pattern for the Column Name Convention rule
         for rule in self.rule_list:
             if rule.key == 4 and rule.version == 1:

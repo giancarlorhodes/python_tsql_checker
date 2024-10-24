@@ -34,7 +34,6 @@ def log_message(message):
 
 def create_processed_copy(tsql_file_path):
 
-    # 
     # Creates a timestamped copy of the original T-SQL file with line numbers.
     # This function also ensures that all lines, including comments and empty lines, are numbered.
 
@@ -43,8 +42,7 @@ def create_processed_copy(tsql_file_path):
 
     # Returns:
     #     tuple: A tuple containing the new file name and the list of lines from the file.
-    #
-
+    
     # Split the file path into file name and extension
     file_name, file_ext = os.path.splitext(tsql_file_path)
     
@@ -114,7 +112,7 @@ def process_validation_rules(lines, validators):
             # If the line starts with '[', it's a column definition
             if stripped_line.startswith('['):
                 # Validate the column name using the column name validation function
-                if validators.is_valid_column_name(line):
+                if validators.is_valid_column_name_statement(line):
                     log_message(f"Line {i}: Passed - Column Name Convention for '{line.strip()}'")
                 else:
                     log_message(f"Line {i}: Failed - Column Name Convention for '{line.strip()}'")
